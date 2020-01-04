@@ -1,0 +1,43 @@
+# Desired compliance range
+range:
+    lower: 7.5
+    higher: 11.5
+
+tonearms:
+    - { name: "My Main Tonearm",   weight: 14 }
+    - { name: "My Second Tonearm", weight: 19 }
+
+cartridges:
+    # Audio-technica
+    - { name: "AT-VM95EL",  weight: 6.1, compliance: 14}
+    - { name: "AT-VM95EN",  weight: 6.1, compliance: 14}
+    - { name: "AT-VM530EN", weight: 6.4, compliance: 16}
+    - { name: "AT-VM540ML", weight: 6.4, compliance: 20}
+    - { name: "AT-VM740ML", weight: 8.0, compliance: 20}
+
+    # Denon
+    - { name: "DL-110",      weight: 4.8, compliance: 16}
+    - { name: "DL-103/103R", weight: 8.5, compliance: 10}
+
+    # Ortofon
+    - { name: "2M Red/Blue",     weight: 7.2, compliance: 20}
+    - { name: "2M Bronze/Black", weight: 7.2, compliance: 22}
+
+    # Nagaoka
+    - { name: "MP-100",        weight: 6.5, compliance: 11}
+    - { name: "MP-110/MP-150", weight: 6.5, compliance: 12}
+    - { name: "MP-200",        weight: 6.5, compliance: 14.4}
+    - { name: "MP-300",        weight: 8.0, compliance: 14.4}
+    - { name: "MP-500",        weight: 8.0, compliance: 17}
+
+headshells:
+    # Audio-technica
+    - { name: "AT-MS11",     weight: 11}
+    - { name: "AT-LH13/OCC", weight: 13}
+
+    # Pro-ject
+    - { name: "Pro-ject Signature Wood", weight: 8}
+
+    # Denon
+    - { name: "Denon OEM Headshell",     weight: 9.1}
+    - { name: "Denon Vintage Headshell", weight: 5.7}
