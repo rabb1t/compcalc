@@ -1,17 +1,16 @@
-
 /* Created by Pavel Raykov aka 'rabbit' / 2018-11-28 (c) */
 /* vim: set ai tabstop=4 expandtab shiftwidth=4 softtabstop=4 filetype=go */
 
 package main
 
 import (
-	"fmt"
-	"math"
 	"flag"
-	"os"
-	"log"
-	"io/ioutil"
+	"fmt"
 	"gopkg.in/yaml.v2"
+	"io/ioutil"
+	"log"
+	"math"
+	"os"
 	"path/filepath"
 )
 
@@ -20,54 +19,54 @@ const (
 )
 
 var (
-	progname string = filepath.Base(os.Args[0])
-	db DB
-	dbFile string
-    freq float64
-    noColor bool
-	onlyMatched bool
-    color_matched string = "\x1b[1;37;43m"
+	progname      string = filepath.Base(os.Args[0])
+	db            DB
+	dbFile        string
+	freq          float64
+	noColor       bool
+	onlyMatched   bool
+	color_matched string = "\x1b[1;37;43m"
 )
 
 // YAML configuration file structure
 type DB struct {
 	Range struct {
-		Lower float64
+		Lower  float64
 		Higher float64
 	}
 
-	Tonearms []Tonearm
+	Tonearms   []Tonearm
 	Cartridges []Cart
 	Headshells []Headshell
 }
 
 // Tonearm object structure
 type Tonearm struct {
-    Name string
-    Weight float64
+	Name   string
+	Weight float64
 }
 
 // Cartridge object structure
 type Cart struct {
-    Name string
-    Weight float64
-    Compliance float64
+	Name       string
+	Weight     float64
+	Compliance float64
 }
 
 // Headshell object structure
 type Headshell struct {
-    Name string
-    Weight float64
+	Name   string
+	Weight float64
 }
 
 // Cartridge's method
 func (c *Cart) ShowCartridgeInfo() {
-    fmt.Printf("===> Name: %-10s | Weight: %.1fg | Compliance: %.1fcm/dyne\n", c.Name, c.Weight, c.Compliance)
+	fmt.Printf("===> Name: %-10s | Weight: %.1fg | Compliance: %.1fcm/dyne\n", c.Name, c.Weight, c.Compliance)
 }
 
 func Compatibility(t *Tonearm, c *Cart, h *Headshell) {
 
-    freq = 159/math.Sqrt((t.Weight + c.Weight + h.Weight) * c.Compliance)
+	freq = 159 / math.Sqrt((t.Weight+c.Weight+h.Weight)*c.Compliance)
 	hl := "\t"
 	color := ""
 	matched := false
@@ -94,13 +93,13 @@ func parseCliOptions() {
 	flag.StringVar(&dbFile, "database", "compcalc.yaml", "database file location")
 
 	// Custom usage information
-    flag.Usage = func() {
+	flag.Usage = func() {
 		fmt.Printf("\n# Resonance Frequency Calculator v%.1f\n\n", version)
-        fmt.Printf("Usage: %s [options]\n\n", progname)
-        flag.PrintDefaults()
-    }
+		fmt.Printf("Usage: %s [options]\n\n", progname)
+		flag.PrintDefaults()
+	}
 
-    flag.Parse()
+	flag.Parse()
 }
 
 func main() {
@@ -108,7 +107,7 @@ func main() {
 	parseCliOptions()
 
 	// Read database file
-    rawData, err := ioutil.ReadFile(dbFile)
+	rawData, err := ioutil.ReadFile(dbFile)
 
 	if err != nil {
 		log.Fatalf("Can't read database file: %s\n", dbFile)
@@ -121,14 +120,14 @@ func main() {
 		log.Fatalf("Can't parse database file %s: %v\n", dbFile, err)
 	}
 
-    // Do the rest
+	// Do the rest
 	for _, cart := range db.Cartridges {
 		cart.ShowCartridgeInfo()
 
 		for _, tonearm := range db.Tonearms {
 			fmt.Printf("  - w/Tonearm: %s (%.1fg)\n", tonearm.Name, tonearm.Weight)
 			for _, hs := range db.Headshells {
-					Compatibility(&tonearm, &cart, &hs)
+				Compatibility(&tonearm, &cart, &hs)
 			}
 		}
 	}
